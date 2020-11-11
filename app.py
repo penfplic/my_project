@@ -34,6 +34,10 @@ def show_main_recipe():
     recipe_ingredient_raw = soup2.select('#divConfirmedMaterialArea > ul:nth-child(1) > a')
 
     recipe_ingredient_list = []
+    recipe_ingredient_list.append({
+        'name':recipe_name_receive,
+        'url':recipe_url_receive
+    })
     for a in recipe_ingredient_raw:
         recipe_ingredient_name = a.select_one('a > li').text
         recipe_ingredient_unit = a.select_one('a > li .ingre_unit').text.strip()
@@ -49,9 +53,9 @@ def show_main_recipe():
     return jsonify({'result': 'success', 'msg': '이 요청은 GET!'})
 
 
-@app.rout('/recipeCheck',methods=['GET'])
+@app.route('/recipeCheck',methods=['GET'])
 def show_check_page():
-    return render_template('landing_page.html')
+    return render_template('check_page.html')
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
