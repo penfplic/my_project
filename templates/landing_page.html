@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+    <!-- 구글폰트 -->
+    <link href="https://fonts.googleapis.com/css?family=Stylish&display=swap" rel="stylesheet">
+    <title>재료구출대작전</title>
+
+    <style>
+        #title {
+            text-align: center;
+            font-family: a시네마M;
+            font-size: 150px;
+
+        }
+
+        #title_description {
+            text-align: center;
+            font-family: a시네마M;
+            font-size: larger;
+        }
+
+        .small_wrap {
+            width: 400px;
+            margin: auto;
+        }
+
+        #exampleFormControlInput1 {
+            width: 300px;
+        }
+    </style>
+
+    <script>
+        function findMainRecipe() {
+            let recipeName = $('#exampleFormControlInput1').val()
+            let recipeUrl = 'https://www.10000recipe.com/recipe/list.html?q=' + recipeName
+
+            console.log(recipeUrl)
+            // 요리이름을 넣은 url return
+            $.ajax({
+                type: "POST",
+                url: "/mainrecipe",
+                data:{
+                    recipe_name_give : recipeName,
+                    recipe_url_give : recipeUrl
+                },
+                success: function (response) {
+                    if (response["result"] == "success") {
+                        alert("조금만 기다려주세욥")
+                        location.href = "/recipeCheck"
+                    }
+                }
+            })
+        }
+    </script>
+
+</head>
+<body>
+<div>
+    <h1 id="title">재료 구출 대작전!</h1>
+    <br>
+    <br>
+    <h2 id="title_description">
+        평소에 요리를 잘 안하고, 못하는 당신.. <br>
+        백종원의 유튜브를 보고 갑자기 김치찌개를 해먹고 싶을 때, 있지 않나요?<br>
+        장도 보고 요리도 하고 설거지도 하는 귀찮은 과정을 다 했는데...<br>
+        남은 재료들이 썩어서 곤란했던 경험.. 있지 않나요?<br>
+        그렇다고 계속 김치찌개를 해먹고 싶지는 않고...<br>
+        내가 산 재료들을 재활용하고 싶다면...<br>
+        아래에 지금 제일 해먹고 싶은 요리를 입력하세요 😉<br>
+        재료들이 겹치는 요리 3개를 추천해드립니다.<br>
+        당신 냉장고의 평화를 위하여...<br>
+
+    </h2>
+    <br>
+    <br>
+    <div class="small_wrap">
+        <div class="form-group">
+            <label for="exampleFormControlInput1"></label>
+            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="당신이 지금 먹고 싶은 그 요리이름">
+        </div>
+        <button type="button" class="btn btn-success" onclick="findMainRecipe()">입력!</button>
+    </div>
+
+</div>
+
+</body>
+</html>
