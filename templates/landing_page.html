@@ -54,9 +54,9 @@
             $.ajax({
                 type: "POST",
                 url: "/mainrecipe",
-                data:{
-                    recipe_name_give : recipeName,
-                    recipe_url_give : recipeUrl
+                data: {
+                    recipe_name_give: recipeName,
+                    recipe_url_give: recipeUrl
                 },
                 success: function (response) {
                     if (response["result"] == "success") {
@@ -89,11 +89,13 @@
     <br>
     <br>
     <div class="small_wrap">
+
         <div class="form-group">
             <label for="exampleFormControlInput1"></label>
             <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="당신이 지금 먹고 싶은 그 요리이름">
         </div>
         <button type="button" class="btn btn-success" onclick="findMainRecipe()">입력!</button>
+
     </div>
 
 </div>
