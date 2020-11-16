@@ -39,14 +39,19 @@
             margin: auto;
         }
 
-        #exampleFormControlInput1 {
-            width: 300px;
+        #button-addon2{
+            background-color: darkolivegreen;
+            font-family: a시네마M;
+            color: white;
+        }
+        .input-group{
+            margin: auto;
         }
     </style>
 
     <script>
         function findMainRecipe() {
-            let recipeName = $('#exampleFormControlInput1').val()
+            let recipeName = $('#recipeInput').val()
             let recipeUrl = 'https://www.10000recipe.com/recipe/list.html?q=' + recipeName
 
             console.log(recipeUrl)
@@ -90,11 +95,13 @@
     <br>
     <div class="small_wrap">
 
-        <div class="form-group">
-            <label for="exampleFormControlInput1"></label>
-            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="당신이 지금 먹고 싶은 그 요리이름">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="recipeInput" placeholder="당신이 지금 먹고 싶은 그 요리이름" aria-label="Recipient's username"
+                   aria-describedby="button-addon2">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="findMainRecipe()">클릭!</button>
+            </div>
         </div>
-        <button type="button" class="btn btn-success" onclick="findMainRecipe()">입력!</button>
 
     </div>
 
