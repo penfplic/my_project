@@ -21,27 +21,28 @@
     <title>재료구출대작전 | 체크</title>
 
     <style>
-        .wrap{
+        .wrap {
             margin: 100px;
-            border:blueviolet 10px solid ;
+            border: blueviolet 10px solid;
 
         }
 
-        #sub-title{
+        #sub-title {
             text-align: center;
             font-family: a시네마M;
             font-size: 100px;
             flex-wrap: wrap;
 
         }
-        #dish-box{
+
+        #dish-box {
             /*background-image: ;*/
             text-align: center;
             font-family: a시네마M;
             font-size: 50px;
             width: 400px;
             height: 400px;
-            border:black 10px solid ;
+            border: black 10px solid;
             display: flex;
             justify-content: center;
             margin: auto;
@@ -51,7 +52,62 @@
     </style>
 
     <script>
+        $(document).ready(function () {
+            // index.html 로드가 완료되면 자동으로 showStar() 함수를 호출합니다.
 
+            showRecipe();
+        });
+
+        function showRecipe() {
+            $.ajax({
+                type: 'GET',
+                url: '/api/list',
+                data: {},
+                success: function (response) {
+
+                    if (response['result'] == 'success') {
+                        console.log('연결')
+                        let main_recipe_list = response['main_recipe_list']
+                        let main_recipe_name = main_recipe_list[0]['recipeName']
+                        temp = `${main_recipe_name}`
+                        $('#dish-box').append(temp)
+
+                        for (let i = 1; i < main_recipe_list.length; i++) {
+                            let ingredient_name = main_recipe_list[i]['name']
+                            let ingredient_unit = main_recipe_list[i]['unit']
+
+                            let temp = `
+                                <p>${ingredient_name}${ingredient_unit}</p>
+                            `
+                            $('#recipe-box').append(temp)
+                        }
+                        // console.log(ingredient_only_list)
+                    }
+                }
+            })
+        }
+
+        function correct() {
+            location.href = "/newRecipes"
+        }
+
+        function incorrect() {
+            let tf=false
+            $.ajax({
+                type:'POST',
+                url:'/recipeCheck',
+                data:{
+                    'tf_give':tf
+                },
+                 success: function (response){
+                     if (response['result'] == 'success'){
+                         alert('죄송해요!')
+                         location.reload()
+                     }
+                 }
+            })
+
+        }
     </script>
 </head>
 <body>
@@ -61,13 +117,15 @@
     <br>
     <br>
     <div id="dish-box">
-        김치찌개
+
     </div>
     <div id="recipe-box">
-
+        <span></span>
     </div>
-</div>
 
+    <button type="button" class="btn btn-success" onclick="correct()">네!</button>
+    <button type="button" class="btn btn-success" onclick="incorrect()">아니요!</button>
+</div>
 
 
 </body>
