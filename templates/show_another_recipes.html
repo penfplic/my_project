@@ -2,9 +2,99 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+    <!-- 구글폰트 -->
+    <link href="https://fonts.googleapis.com/css?family=Stylish&display=swap" rel="stylesheet">
+    <title>재료 구출 대작전 | 마지막 페이지 </title>
+
+    <style>
+
+    </style>
+
+    <script>
+
+        $(document).ready(function () {
+            // index.html 로드가 완료되면 자동으로 showStar() 함수를 호출합니다.
+
+            showRecipe();
+        });
+
+        function showRecipe() {
+            $.ajax({
+                type: 'GET',
+                url: '/newRecipes/api/list',
+                data: {},
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        console.log('연결')
+                        let main_recipe_list = response['main_recipe_list']
+                        let main_recipe_name = main_recipe_list[0]['recipeName']
+                        let other_recipe_list = response['other_recipe_list']
+
+                        for (let i = 1; i < main_recipe_list.length; i++) {
+                            let ingredient_name = main_recipe_list[i]['name']
+                            let ingredient_unit = main_recipe_list[i]['unit']
+
+                            let temp = `
+                                <p>${ingredient_name}  ${ingredient_unit}</p>
+
+                            `
+                            $('#recipe-box').append(temp)
+                        }
+                        for (let j = 0; j < other_recipe_list.length; j++) {
+                            for (let k = 0; k < other_recipe_list[j].length; k++) {
+                                let other_ingredient_name = main_recipe_list[i]['name']
+                                let other_ingredient_unit = main_recipe_list[i]['unit']
+
+                                let temp_other = `
+                            <p>${other_ingredient_name}  ${other_ingredient_unit}</p>
+
+                        `
+                                $('#other-recipe-box').append(temp_other)
+                            }
+                        }
+
+
+
+                        }
+
+                    }
+
+                })
+        }
+    </script>
 </head>
 <body>
 <p>hihi</p>
+<div id="recipe-box"></div>
+<div id="other-recipe-box"></div>
+<!--<div class="card" style="width: 18rem;">-->
+<!--  <img src="..." class="card-img-top" alt="...">-->
+<!--  <div class="card-body">-->
+<!--    <h5 class="card-title">Card title</h5>-->
+<!--    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>-->
+<!--  </div>-->
+<!--  <ul class="list-group list-group-flush">-->
+<!--    <li class="list-group-item">Cras justo odio</li>-->
+<!--    <li class="list-group-item">Dapibus ac facilisis in</li>-->
+<!--    <li class="list-group-item">Vestibulum at eros</li>-->
+<!--  </ul>-->
+<!--  <div class="card-body">-->
+<!--    <a href="#" class="card-link">Card link</a>-->
+<!--    <a href="#" class="card-link">Another link</a>-->
+<!--  </div>-->
+</div>
 </body>
 </html>
