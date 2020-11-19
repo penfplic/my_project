@@ -49,6 +49,22 @@
 
 
         }
+
+        #recipe-box {
+            text-align: center;
+            font-family: a시네마M;
+            font-size: 20px;
+            width: 400px;
+            height: 400px;
+            border: black 10px solid;
+
+            margin: auto;
+        }
+        #buttons{
+            display: flex;
+            justify-content: center;
+            margin: auto;
+        }
     </style>
 
     <script>
@@ -77,7 +93,8 @@
                             let ingredient_unit = main_recipe_list[i]['unit']
 
                             let temp = `
-                                <p>${ingredient_name}${ingredient_unit}</p>
+                                <p>${ingredient_name}  ${ingredient_unit}</p>
+
                             `
                             $('#recipe-box').append(temp)
                         }
@@ -88,23 +105,41 @@
         }
 
         function correct() {
-            location.href = "/newRecipes"
+            let tf = true
+            $.ajax({
+                type: 'POST',
+                url: '/newRecipes',
+                data: {
+                    'tf_give': tf
+                },
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        alert('로딩중,,')
+                        location.href = "/newRecipes"
+                    }
+                    if(response['result']=='fail'){
+                        alert(response['msg'])
+                        location.href="/"
+                    }
+                }
+            })
+
         }
 
         function incorrect() {
-            let tf=false
+            let tf = false
             $.ajax({
-                type:'POST',
-                url:'/recipeCheck',
-                data:{
-                    'tf_give':tf
+                type: 'POST',
+                url: '/recipeCheck',
+                data: {
+                    'tf_give': tf
                 },
-                 success: function (response){
-                     if (response['result'] == 'success'){
-                         alert('죄송해요!')
-                         location.reload()
-                     }
-                 }
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        alert('죄송해요!')
+                        location.reload()
+                    }
+                }
             })
 
         }
@@ -122,9 +157,10 @@
     <div id="recipe-box">
         <span></span>
     </div>
-
-    <button type="button" class="btn btn-success" onclick="correct()">네!</button>
-    <button type="button" class="btn btn-success" onclick="incorrect()">아니요!</button>
+    <div id="buttons">
+        <button type="button" class="btn btn-success" onclick="correct()">네!</button>
+        <button type="button" class="btn btn-success" onclick="incorrect()">아니요!</button>
+    </div>
 </div>
 
 
